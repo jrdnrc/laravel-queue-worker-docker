@@ -1,9 +1,12 @@
 #!/bin/bash
 
+QUEUE=${QUEUE:-default}
+CONNECTION=${CONNECTION:-default}
+
 # Check for install of laravel at /var/www
 if ! [ -e /var/www/artisan ]
 then
-  echo "Laravel installation not found"
+  echo "Laravel installation not found, exiting"
   exit 45
 fi
 
@@ -21,4 +24,4 @@ chown -R www-data:www-data /var/www/storage/logs
 chown -R www-data:www-data /var/www/storage/app
 
 # Start the php serve
-php /var/www/artisan queue:work
+php /var/www/artisan queue:work ${CONNECTION} --queue=${QUEUE}
